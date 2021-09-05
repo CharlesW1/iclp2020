@@ -1,0 +1,120 @@
+#const n = 21.
+tile(0..n-1, 0..n-1).
+:- edge(X,Y, A,B), |X - A| + |Y - B| > 1.
+:- edge(X,Y, X,Y).
+:- edge(X,Y, A,B), edge(A,B, X,Y).
+{edge(X,Y, 0..(n-1),0..(n-1))} <= 1 :- tile(X,Y).
+{edge(0..(n-1),0..(n-1), A,B)} <= 1 :- tile(A,B).
+{edge(X,Y, 0..(n-1),0..(n-1))} = 1 :- edge(_,_, X,Y).
+{edge(0..(n-1),0..(n-1), X,Y)} = 1 :- edge(X,Y, _,_).
+reached(A,B) :- edge(X,Y, A,B), reached(X,Y).
+:- edge(_,_, A,B), not reached(A,B).
+straight(X,Y):- edge(A,B, X,Y), edge(X,Y, A,D), |B-D|=2.
+straight(X,Y):- edge(A,B, X,Y), edge(X,Y, C,B), |A-C|=2.
+curve(X,Y):- edge(A,B, X,Y), edge(X,Y, C,D), |A-C| - |B-D| = 0.
+:- straight(X,Y), curve(X,Y).{edge(X,Y, 0..(n-1),0..(n-1))} = 1 :- white(X,Y).
+{edge(X,Y, 0..(n-1),0..(n-1))} = 1 :- black(X,Y).
+straight(X,Y) :- white(X,Y).
+:- white(X,Y), edge(A,B, X,Y), edge(X,Y, C,D), straight(A,B), straight(C,D).
+curve(X,Y) :- black(X,Y).
+straight(A,B) :- black(X,Y), edge(A,B, X,Y).
+straight(A,B) :- black(X,Y), edge(X,Y, A,B).
+white(0,10).
+white(0,16).
+white(1,0).
+white(1,5).
+white(1,7).
+white(1,11).
+white(1,14).
+white(1,17).
+white(2,6).
+white(2,9).
+white(2,10).
+white(2,12).
+white(3,11).
+white(3,14).
+white(4,12).
+white(4,13).
+white(5,0).
+white(5,8).
+white(6,1).
+white(6,11).
+white(7,1).
+white(7,6).
+white(7,16).
+white(7,18).
+white(8,8).
+white(8,11).
+white(8,15).
+white(8,17).
+white(9,10).
+white(10,3).
+white(10,7).
+white(10,9).
+white(10,11).
+white(10,18).
+white(11,8).
+white(11,11).
+white(12,2).
+white(12,3).
+white(12,11).
+white(12,13).
+white(13,3).
+white(13,12).
+white(13,19).
+white(14,1).
+white(14,3).
+white(15,1).
+white(15,3).
+white(15,8).
+white(15,10).
+white(15,16).
+white(15,18).
+white(16,2).
+white(16,9).
+white(16,15).
+white(17,6).
+white(17,17).
+white(18,2).
+white(18,12).
+white(18,17).
+white(19,17).
+white(19,18).
+black(0,12).
+black(0,19).
+black(1,1).
+black(2,8).
+black(3,3).
+black(3,17).
+black(4,4).
+black(4,8).
+black(5,1).
+black(5,6).
+black(5,19).
+black(6,15).
+black(7,2).
+black(7,4).
+black(7,10).
+black(7,13).
+black(9,12).
+black(10,0).
+black(10,6).
+black(10,15).
+black(11,19).
+black(12,16).
+black(13,5).
+black(13,6).
+black(13,9).
+black(14,5).
+black(14,10).
+black(14,13).
+black(14,14).
+black(15,12).
+black(17,5).
+black(17,10).
+black(17,13).
+black(19,0).
+black(19,6).
+black(19,7).
+black(19,15).
+reached(0,10).
